@@ -2,7 +2,7 @@
 app = "your-app-name" # replace with your Fly app name
 
 [build]
-  builder = "paketobuildpacks/builder:base"
+  dockerfile = "Dockerfile"
 
 [env]
   PORT = "3000"
