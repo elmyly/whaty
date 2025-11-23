@@ -1,0 +1,7 @@
+.DS_Store
+node_modules
+.wa-session
+.wwebjs_cache
+data/users.json
+data/lists.json
+package-lock.json

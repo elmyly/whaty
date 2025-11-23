@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Connect Session • WhatsApp Marketing Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-page="connect">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="https://i.ibb.co/zhfdppMF/Untitled-design-7.png" alt="Whaty logo" />
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">studio</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Overview</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link" data-nav="dashboard">
+              <span class="icon">🏠</span>
+              <span class="label">Dashboard</span>
+              <span class="badge">Live</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Messaging</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="connect.html" class="nav-link" data-nav="connect">
+              <span class="icon">🔗</span>
+              <span class="label">Connect Session</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="inbox.html" class="nav-link" data-nav="inbox">
+              <span class="icon">📥</span>
+              <span class="label">Inbox</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="upload.html" class="nav-link" data-nav="upload">
+              <span class="icon">📂</span>
+              <span class="label">Upload List</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="compose.html" class="nav-link" data-nav="compose">
+              <span class="icon">💬</span>
+              <span class="label">Single Message</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="bulk.html" class="nav-link" data-nav="bulk">
+              <span class="icon">📣</span>
+              <span class="label">Bulk Campaign</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="send-log.html" class="nav-link" data-nav="send-log">
+              <span class="icon">📜</span>
+              <span class="label">Send Log</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="credits.html" class="nav-link" data-nav="credits">
+              <span class="icon">💳</span>
+              <span class="label">Buy Credits</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin.html" class="nav-link" data-nav="admin">
+              <span class="icon">🛠️</span>
+              <span class="label">Admin</span>
+              <span class="badge">Only</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="session-status">
+          <div class="status-dot" id="sidebar-session-dot"></div>
+          <span>
+            Session: <strong id="sidebar-session-label">disconnected</strong>
+          </span>
+        </div>
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar">YM</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">Youssef El myly</div>
+            <div class="sidebar-user-role">Full Stack • Admin</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-title">
+            Connect Session
+            <span class="topbar-tag">whatsapp-web.js</span>
+          </div>
+          <div class="topbar-subtitle">
+            Control your WhatsApp marketing flows from a single, clean dashboard.
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="badge-pill">
+            Session: <strong id="topbar-session-label">Disconnected</strong>
+          </div>
+          <button class="btn btn-ghost" id="btn-toggle-theme" type="button">
+            🌓 Theme
+          </button>
+          <button class="btn btn-primary" type="button">
+            ⚡ New Campaign
+          </button>
+        </div>
+      </header>
+
+      <section class="content">
+        
+<div class="qr-wrapper">
+  <div class="qr-card">
+    <div class="qr-card-main">
+      <div>
+            <div class="qr-code-placeholder" id="qr-placeholder">
+              <img id="qr-image" class="qr-image" alt="WhatsApp QR code" hidden />
+              <div class="qr-empty-state" id="qr-empty-state">
+                <div class="qr-empty-title" id="qr-empty-title">Awaiting QR</div>
+                <div class="qr-empty-subtitle" id="qr-empty-subtitle">Restart to refresh.</div>
+              </div>
+            </div>
+          </div>
+      <div class="qr-info">
+        <div class="qr-title">Scan this QR with WhatsApp</div>
+        <div class="qr-text">
+          Connect your WhatsApp Business session using
+          <code>whatsapp-web.js</code>. The QR code refreshes from the backend
+          as soon as WhatsApp requests a new login.
+        </div>
+        <div class="qr-steps">
+          <div class="qr-step">
+            <div class="qr-step-number">1</div>
+            <div>Open WhatsApp on your phone.</div>
+          </div>
+          <div class="qr-step">
+            <div class="qr-step-number">2</div>
+            <div>
+              Go to <strong>Linked devices</strong> →
+              <strong>Link a device</strong>.
+            </div>
+          </div>
+          <div class="qr-step">
+            <div class="qr-step-number">3</div>
+            <div>Point your camera at this screen to scan the QR code.</div>
+          </div>
+        </div>
+        <div class="qr-meta">
+          <span class="qr-meta-badge">
+            Status: <span id="connect-session-status">Waiting for QR</span>
+          </span>
+          <span class="qr-meta-badge">
+            Expires in: <span id="qr-expires-label">--</span>
+          </span>
+          <span class="qr-meta-badge">
+            Client: <span id="qr-client-label">—</span>
+          </span>
+        </div>
+        <div style="margin-top: 10px; display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-primary" type="button" id="btn-generate-qr">
+            🔄 Restart session
+          </button>
+          <button class="btn btn-ghost" type="button" id="btn-logout-session">
+            🔌 Logout session
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qr-secondary">
+    <div class="qr-secondary-header">
+      <div>
+        <div class="panel-title" style="font-size:14px;">Session Health</div>
+        <div class="qr-tagline">
+          Overview of your current WhatsApp runtime.
+        </div>
+      </div>
+      <div class="chip">Node.js backend required</div>
+    </div>
+    <div class="qr-secondary-metrics">
+      <span>Environment: <strong>Production</strong></span>
+      <span>Runtime: <strong>Node 20+</strong></span>
+      <span>Library: <strong>whatsapp-web.js</strong></span>
+      <span>Driver: <strong>Chromium / Puppeteer</strong></span>
+    </div>
+    <div style="margin-top: 10px; font-size:12px; color:#9ca3af;">
+      The dashboard now calls the Node backend for QR codes, session
+      status, and logout / restart actions powered by
+      <code>whatsapp-web.js</code>.
+    </div>
+  </div>
+</div>
+
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+  <script>
+    (function enforceAuth() {
+      try {
+        const raw = localStorage.getItem("wr:user");
+        const user = raw ? JSON.parse(raw) : null;
+        if (!user || !user.email) {
+          window.location.replace("signin.html");
+        }
+      } catch (error) {
+        window.location.replace("signin.html");
+      }
+    })();
+  </script>
+  <script src="assets/main.js"></script>
+</body>
+</html>

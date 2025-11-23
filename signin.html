@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WaveReach • Sign in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/signin.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-brand">
+          <div class="auth-logo">WA</div>
+          <div class="auth-brand-text">
+            <span class="auth-brand-title">WaveReach</span>
+            <span class="auth-brand-subtitle">WhatsApp Studio</span>
+          </div>
+        </div>
+        <h1>Welcome back</h1>
+        <p>Sign in to access your campaigns and WhatsApp sessions.</p>
+      </div>
+
+      <button class="google-btn" type="button">
+        <span class="google-icon">G</span>
+        <span>Continue with Google</span>
+      </button>
+
+      <div class="divider">
+        <span></span>
+        <span>or use your email</span>
+        <span></span>
+      </div>
+
+      <form class="auth-form" id="signin-form">
+        <label>
+          <span>Email</span>
+          <input id="signin-email" type="email" placeholder="you@example.com" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="signin-password" type="password" placeholder="••••••••" required />
+        </label>
+
+        <div class="auth-row">
+          <label class="remember">
+            <input type="checkbox" />
+            <span>Keep me signed in</span>
+          </label>
+          <a href="#" class="link-sm">Forgot password?</a>
+        </div>
+
+        <button class="btn-primary" type="submit">Sign in</button>
+      </form>
+      <p class="auth-status" id="signin-status" role="status"></p>
+
+      <p class="auth-alt">
+        Don’t have an account?
+        <a href="signup.html">Create one</a>
+      </p>
+
+      <a href="index.html" class="back-link">← Back to landing</a>
+    </div>
+  </div>
+
+  <script>
+    const signinForm = document.getElementById("signin-form");
+    const signinStatus = document.getElementById("signin-status");
+
+    function getStoredUser() {
+      try {
+        const raw = localStorage.getItem("wr:user");
+        return raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function setSigninStatus(message, isError = false) {
+      if (!signinStatus) return;
+      signinStatus.textContent = message || "";
+      signinStatus.style.color = isError ? "#d14343" : "#0f9d58";
+    }
+
+    async function parseApiResponse(response) {
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        return response.json();
+      }
+      const text = await response.text();
+      throw new Error(text || "Unexpected response from server.");
+    }
+
+    signinForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const email = document.getElementById("signin-email")?.value.trim();
+      const password = document.getElementById("signin-password")?.value;
+      const submitBtn = signinForm.querySelector('button[type="submit"]');
+      setSigninStatus("");
+
+      if (!email || !password) {
+        setSigninStatus("Email and password are required.", true);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Signing in...";
+      try {
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await parseApiResponse(response);
+        if (!response.ok) {
+          throw new Error(data?.message || "Failed to sign in.");
+        }
+        localStorage.setItem("wr:user", JSON.stringify(data.user));
+        setSigninStatus("Signed in! Redirecting...");
+        const redirectTarget = "dashboard.html"; // main dashboard overview
+        setTimeout(() => {
+          window.location.href = redirectTarget;
+        }, 300);
+      } catch (error) {
+        setSigninStatus(error.message || "Could not sign in.", true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Sign in";
+      }
+    });
+
+    const existingUser = getStoredUser();
+    if (existingUser) {
+      setSigninStatus("Already signed in. Redirecting...");
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 250);
+    }
+  </script>
+</body>
+</html>

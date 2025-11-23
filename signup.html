@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WaveReach • Create account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/signup.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-brand">
+          <div class="auth-logo">WA</div>
+          <div class="auth-brand-text">
+            <span class="auth-brand-title">WaveReach</span>
+            <span class="auth-brand-subtitle">WhatsApp Studio</span>
+          </div>
+        </div>
+        <h1>Create your account</h1>
+        <p>Set up your workspace and connect your first WhatsApp session.</p>
+      </div>
+
+      <button class="google-btn" type="button">
+        <span class="google-icon">G</span>
+        <span>Sign up with Google</span>
+      </button>
+
+      <div class="divider">
+        <span></span>
+        <span>or sign up with email</span>
+        <span></span>
+      </div>
+
+      <form class="auth-form" id="signup-form">
+        <label>
+          <span>Full name</span>
+          <input id="signup-name" type="text" placeholder="Your name" required />
+        </label>
+        <label>
+          <span>Work email</span>
+          <input id="signup-email" type="email" placeholder="you@company.com" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input
+            id="signup-password"
+            type="password"
+            placeholder="Minimum 8 characters"
+            minlength="8"
+            required
+          />
+        </label>
+
+        <label class="checkbox-row">
+          <input type="checkbox" required />
+          <span>I accept the terms and understand this is self-hosted software.</span>
+        </label>
+
+        <button class="btn-primary" type="submit">Create account</button>
+      </form>
+      <p class="auth-status" id="signup-status" role="status"></p>
+
+      <p class="auth-alt">
+        Already registered?
+        <a href="signin.html">Sign in</a>
+      </p>
+
+      <a href="index.html" class="back-link">← Back to landing</a>
+    </div>
+  </div>
+
+  <script>
+    const signupForm = document.getElementById("signup-form");
+    const signupStatus = document.getElementById("signup-status");
+
+    function getStoredUser() {
+      try {
+        const raw = localStorage.getItem("wr:user");
+        return raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function setSignupStatus(message, isError = false) {
+      if (!signupStatus) return;
+      signupStatus.textContent = message || "";
+      signupStatus.style.color = isError ? "#d14343" : "#0f9d58";
+    }
+
+    async function parseApiResponse(response) {
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        return response.json();
+      }
+      const text = await response.text();
+      throw new Error(text || "Unexpected response from server.");
+    }
+
+    signupForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const name = document.getElementById("signup-name")?.value.trim();
+      const email = document.getElementById("signup-email")?.value.trim();
+      const password = document.getElementById("signup-password")?.value;
+      const submitBtn = signupForm.querySelector('button[type="submit"]');
+      setSignupStatus("");
+
+      if (!name || !email || !password) {
+        setSignupStatus("All fields are required.", true);
+        return;
+      }
+      if (password.length < 8) {
+        setSignupStatus("Password must be at least 8 characters.", true);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Creating...";
+      try {
+        const response = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        });
+        const data = await parseApiResponse(response);
+        if (!response.ok) {
+          throw new Error(data?.message || "Failed to create account.");
+        }
+        setSignupStatus("Account created! Redirecting to sign in...");
+        setTimeout(() => {
+          window.location.href = "signin.html";
+        }, 600);
+      } catch (error) {
+        setSignupStatus(error.message || "Could not create account.", true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create account";
+      }
+    });
+
+    const existingUser = getStoredUser();
+    if (existingUser) {
+      setSignupStatus("You are already signed in. Redirecting...");
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 250);
+    }
+  </script>
+</body>
+</html>

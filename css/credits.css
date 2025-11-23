@@ -1,0 +1,108 @@
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.price-card {
+  background: linear-gradient(145deg, #f9fafb, #eef2ff);
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.price-card-title {
+  font-weight: 700;
+  color: #111827;
+}
+
+.price-card-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.price-card-meta {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.price-card-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: #f3f4f6;
+}
+
+.price-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.price-card .btn {
+  margin-top: 8px;
+}
+
+.price-card-note {
+  font-size: 12px;
+  color: #4b5563;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.contact-admin {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 14px;
+  max-width: 640px;
+  width: 100%;
+  margin-top: 100px;
+}
+
+.contact-title {
+  font-weight: 700;
+  color: #065f46;
+  font-size: 18px;
+}
+
+.contact-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-number {
+  color: #000000;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  text-align: center;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 10px 24px rgba(22, 163, 74, 0.25);
+  font-weight: 700;
+  border: none;
+}

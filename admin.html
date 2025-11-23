@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin • Accounts & Quota</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body data-page="admin">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="https://i.ibb.co/zhfdppMF/Untitled-design-7.png" alt="Whaty logo" />
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Youssef El myly</div>
+          <div class="brand-subtitle">
+            <a href="https://wa.me/212716908709" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">
+              +212716908709
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Overview</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link" data-nav="dashboard">
+              <span class="icon">🏠</span>
+              <span class="label">Dashboard</span>
+              <span class="badge">Live</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="admin.html" class="nav-link active" data-nav="admin">
+              <span class="icon">🛠️</span>
+              <span class="label">Admin</span>
+              <span class="badge">Only</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Messaging</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="connect.html" class="nav-link" data-nav="connect">
+              <span class="icon">🔗</span>
+              <span class="label">Connect Session</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="inbox.html" class="nav-link" data-nav="inbox">
+              <span class="icon">📥</span>
+              <span class="label">Inbox</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="upload.html" class="nav-link" data-nav="upload">
+              <span class="icon">📂</span>
+              <span class="label">Upload List</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="compose.html" class="nav-link" data-nav="compose">
+              <span class="icon">💬</span>
+              <span class="label">Single Message</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="bulk.html" class="nav-link" data-nav="bulk">
+              <span class="icon">📣</span>
+              <span class="label">Bulk Campaign</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="send-log.html" class="nav-link" data-nav="send-log">
+              <span class="icon">📜</span>
+              <span class="label">Send Log</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="credits.html" class="nav-link" data-nav="credits">
+              <span class="icon">💳</span>
+              <span class="label">Buy Credits</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="session-status">
+          <div class="status-dot" id="sidebar-session-dot"></div>
+          <span>
+            Session: <strong id="sidebar-session-label">disconnected</strong>
+          </span>
+        </div>
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar">YM</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">Youssef El myly</div>
+            <div class="sidebar-user-role">Full Stack • Admin</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-title">
+            Admin • Accounts & Quota
+            <span class="topbar-tag">owner</span>
+          </div>
+          <div class="topbar-subtitle">
+            Manage registered users, quotas, and access.
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="badge-pill">
+            Session: <strong id="topbar-session-label">Disconnected</strong>
+          </div>
+          <button class="btn btn-ghost" id="btn-toggle-theme" type="button">
+            🌓 Theme
+          </button>
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Users</div>
+            <div class="panel-subtitle">Edit quota or remove accounts.</div>
+          </div>
+          <div class="admin-toolbar">
+            <input
+              type="search"
+              id="admin-search"
+              class="input"
+              placeholder="Search by name or email..."
+              aria-label="Search users"
+            />
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>👤 User</th>
+                  <th>🏷️ Role</th>
+                  <th>🎯 Quota limit</th>
+                  <th>🧾 Used</th>
+                  <th>🟢 Remaining</th>
+                  <th>⚙️ Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-body">
+                <tr><td colspan="6" style="text-align:center;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+  <script>
+    (function enforceAuth() {
+      try {
+        const raw = localStorage.getItem("wr:user");
+        const user = raw ? JSON.parse(raw) : null;
+        const adminEmail = "elmylypro@gmail.com";
+        if (!user || !user.email || user.email.toLowerCase() !== adminEmail) {
+          window.location.replace("signin.html");
+        }
+      } catch (error) {
+        window.location.replace("signin.html");
+      }
+    })();
+  </script>
+  <script src="assets/main.js"></script>
+</body>
+</html>
