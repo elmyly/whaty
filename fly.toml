@@ -1,5 +1,6 @@
 # Fly.io app configuration
-app = "your-app-name" # replace with your Fly app name
+# Replace with your Fly app name; using placeholder from your dashboard
+app = "whaty-1pgava"
 
 [build]
   dockerfile = "Dockerfile"
