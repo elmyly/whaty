@@ -16,7 +16,7 @@ const USERS_FILE = path.join(DATA_DIR, "users.json");
 const SESSIONS_DIR = path.join(__dirname, ".wa-session");
 const MAX_LIST_SIZE = Number(process.env.MAX_LIST_SIZE || 10000);
 const FREE_QUOTA = Number(process.env.FREE_QUOTA || 10);
-const ADMIN_EMAIL = "elmylypro@gmail.com";
+const ADMIN_EMAIL = "youssef1312.1213@gmail.com";
 
 const SPEED_DELAYS = {
   slow: 5000,
